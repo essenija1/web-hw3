@@ -22,15 +22,15 @@
                         src="C:/Users/nekhaychuk/Desktop/hw3/1.jpg"
                         alt="product name"></a>
                 <div class="product__info">
-                    <a href="#" class="product__heading">Текст</a>
+                    <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
                 </div>
             </div>
-            <div class="product"
+            <div class="product">
             <a href="#"><img class="product__img"
                 src="C:/Users/nekhaychuk/Desktop/hw3/2.jpg"
                 alt="product name"></a>
         <div class="product__info">
-            <a href="#" class="product__heading">Текст</a>
+            <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
         </div>
     </div>
     <div class="product">
@@ -38,46 +38,66 @@
         src="C:/Users/nekhaychuk/Desktop/hw3/3.jpg"
         alt="product name"></a>
 <div class="product__info">
-    <a href="#" class="product__heading">Текст</a>
+    <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
 </div>
 </div>
-<div class="product"
+<div class="product">
 <video class="video"
     src="C:/Users/nekhaychuk/Desktop/hw3/1.MP4"
-    alt="product name" width="360" height="500" type="video/mp4" controls></video>
+    alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></video>
 <div class="product__info">
-    <a id="playBtn">Play</a>
-            <span id="timer">00:00</span>
-            <input type="range" step="0.1" min="0" max="1" value="0" id="volume" />
-    <a href="#" class="product__heading">Текст</a>
+    <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
     
 </div>
 </div>
-<div class="product"
+<div class="product">
 <video class="video"
     src="C:/Users/nekhaychuk/Desktop/hw3/2.MP4"
     alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></video>
 <div class="product__info">
-    <a id="playBtn">Play</a>
-            <span id="timer">00:00</span>
-            <input type="range" step="0.1" min="0" max="1" value="0" id="volume" />
-<a href="#" class="product__heading">Текст</a>
+    <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
 
 </div>
 </div>
 
-<div class="product"
+<div class="product">
 <video class="video"
     src="C:/Users/nekhaychuk/Desktop/hw3/3.MP4"
-    alt="product name" width="360" height="500" type="video/mp4" controls></video>
+    alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></video>
 <div class="product__info">
-    <a id="playBtn">Play</a>
-            <span id="timer">00:00</span>
-            <input type="range" step="0.1" min="0" max="1" value="0" id="volume" />
-<a href="#" class="product__heading">Текст</a>
+    <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
 
 </div>
 </div>
+
+
+
+<div class="product">
+    <audio 
+    src="sound.mp3" 
+    preload="none" alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></audio>
+    <div class="product__info">
+        <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
+ </div>
+</div>
+
+<div class="product">
+    <audio 
+    src="sound.mp3" preload="none" alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></audio>
+    <div class="product__info">
+        <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
+ </div>
+</div>
+<div class="product">
+    <audio 
+    src="sound.mp3" preload="none" alt="product name" width="360" poster="C:/Users/nekhaychuk/Desktop/hw3/3.jpg" type="video/mp4" controls></audio>
+    <div class="product__info">
+        <a href="#" onclick="soundClick()">Кликни по этому тексту</a>
+ </div>
+</div>
+
+
+
 <script>
     // получаем все элементы
     var videoEl = document.getElementsByTagName('video')[0],
@@ -122,7 +142,51 @@
     videoEl.addEventListener('timeupdate', function () {
         timePicker.innerHTML = secondsToTime(videoEl.currentTime);
     }, false);
-     
+
+    //аудио
+    function soundClick() {
+    var audio = new Audio(); // Создаём новый элемент Audio
+    audio.src = 'click.mp3'; // Указываем путь к звуку "клика"
+    audio.autoplay = true; // Автоматически запускаем
+};
+function play_audio(task) {
+      if(task == 'play'){
+           $(".sound").trigger('play');
+      }
+      if(task == 'stop'){
+           $(".sound").trigger('pause');
+           $(".sound").prop("currentTime",0);
+      }
+ };
+ keys = Object.keys(playlist);
+$('.sound').append("<source id='sound_src' src=" + playlist[keys[0]] + " type='audio/mpeg'>");
+count = 0; 
+$('.sound').on('ended', function() { 
+   count++;  
+   $("#sound_src").attr("src", playlist[keys[count]])[0];
+   $(".sound").trigger('load');
+   play_audio('play');
+});  
+
+playlist = {
+    'song_1' : 'sound.mp3',
+    'song_2' : 'sound.mp3',
+    'song_3' : 'sound.mp3',
+};
+
+count = 0; 
+$('.sound').on('ended', function() { 
+   count++;  
+   $("#sound_src").attr("src", playlist[keys[count]])[0];
+   $(".sound").trigger('load');
+   play_audio('play');
+});
+document.getElementById('myAudio').play();
+setTimeout(() => {
+  document.getElementById('mySound').play();
+}, 500)
+audioElement.play();
+
     // рассчет отображаемого времени
     function secondsToTime(time){
          
@@ -151,9 +215,13 @@
             fulltime = h + ':' + m + ':' + s;
         }
         return fulltime;
-    }
+    };
     </script>
-
+    <script>
+        audiojs.events.ready(function() {
+          var as = audiojs.createAll();
+        });
+      </script>
            
 
     </section>
